@@ -1,10 +1,10 @@
 testbed:
   credentials:
     default:
-      password: '%ASK{}'
-      username: '%ASK{}'
+      password: 'cisco'
+      username: 'cisco'
     enable:
-      password: '%ASK{}'
+      password: 'cisco'
 
 devices:
   edge-firewall01:
