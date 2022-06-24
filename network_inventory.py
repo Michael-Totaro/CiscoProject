@@ -7,6 +7,28 @@ Goal:
 """
 
 from pyats.topology.loader import load
+from genie.libs.parser.utils.common import ParserNotFound
+from genie.metaparser.util.exceptions import SchemaEmptyParserError
+
+def parse_command(device, command):
+    """
+    Attempt to parse a command on a device with PYATS.
+    In case of common errors, return best info possible.
+    """
+
+    print(f"Running {command} on {device.name})
+
+    try:
+        output = device.parse(command)
+        return {"type": "parsed", "output": output}
+    except ParserNotFound:
+        print(f"  Error: pyATS lacks a parser for devices")
+    except SchemaEmptyParserError:
+        print(f"  Error: No valid data found from output")
+
+    # device.execute runs commands, gathers raw output
+    output = device.execute(command)
+    return {"type": "parsed", "output": output}
 
 # Script entry point
 if __name__ == "__main__":
@@ -42,7 +64,7 @@ if __name__ == "__main__":
         show_inventory[device] = testbed.devices.parse("show inventory")
 
         print(f"{device} show inventory: {show_inventory[device]}")
-        
+
     # Disconnect from network devices
     for device in testbed.devices:
         print(f"Disconnecting from device {device}.")
