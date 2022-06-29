@@ -40,6 +40,7 @@ def get_device_inventory(device, show_version, show_inventory):
     return (device_name, device_os, software_version, uptime, serial_number)
     """
 
+    print("hello world")
     # Common device details from testbed device
     device_name = device.name
     device_os = device.os
@@ -153,7 +154,7 @@ if __name__ == "__main__":
     inventory_file = f'{now.strftime("%Y-%m-%d-%H-%M-%S")}_{testbed.name}_network_inventory.csv'
 
     print(f'Writing inventory to file {inventory_file}.')
-
+    
     with open(inventory_file, 'w', newline='') as csvfile:
         inv_writer = csv.writer(csvfile, dialect="excel")
 
